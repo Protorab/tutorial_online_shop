@@ -4,10 +4,30 @@ import { createStore } from "vuex";
 let store = createStore({
   state: {
     products: [],
+    cart: [],
   },
   mutations: {
     SET_PRODUCTS_TO_STATE: (state, products) => {
       state.products = products;
+    },
+    SET_CART: (state, product) => {
+      if (state.cart.length) {
+        let exist = false;
+        state.cart.map(function(item) {
+          if (item.article === product.article) {
+            exist = true;
+            item.quantity++;
+          }
+        });
+        if (!exist) {
+          state.cart.push(product);
+        }
+      } else {
+        state.cart.push(product);
+      }
+    },
+    DELETE_FROM_CART: (state, index) => {
+      state.cart.splice(index, 1);
     },
   },
   actions: {
@@ -24,10 +44,19 @@ let store = createStore({
           return error;
         });
     },
+    ADD_TO_CART({ commit }, product) {
+      commit("SET_CART", product);
+    },
+    REMOVE_FROM_CART({ commit }, index) {
+      commit("DELETE_FROM_CART", index);
+    },
   },
   getters: {
     PRODUCTS(state) {
       return state.products;
+    },
+    CART(state) {
+      return state.cart;
     },
   },
 });

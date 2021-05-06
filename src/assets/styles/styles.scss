@@ -1,3 +1,76 @@
 @import "./variables.scss";
 
-body {}
+* {
+  box-sizing: border-box;
+}
+
+body {
+  display: grid;
+  grid-template-columns: repeat(1, 4fr);
+}
+
+.btn {
+  transition: .3s all ease-in-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4px 8px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 0 3px $boxShadow;
+  position: relative;
+  overflow: hidden;
+  border-radius: 5px;
+  border: $boxShadow 1px solid;
+  color: $mainColor;
+  z-index: 1;
+  background: #fff;
+  transition-delay: .5s;
+
+  &::before,
+  &::after {
+    transition: .5s all ease-in-out;
+    content: "";
+    position: absolute;
+    display: block;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: -1;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+  }
+
+  &::before {
+    transition-delay: .5s;
+    border-radius: 5px;
+    width: 200px;
+    height: 200px;
+    background: #fff;
+  }
+
+  &::after {
+    background: #000;
+    transition-delay: 0s;
+  }
+
+  &:hover {
+    color: $boxShadow;
+    transition-delay: 0s;
+    box-shadow: 0 0 6px $boxShadow;
+    border-color: #000;
+
+    &::before {
+      width: 0;
+      height: 0;
+    }
+
+    &::after {
+      width: 200px;
+      height: 200px;
+    }
+
+  }
+}
